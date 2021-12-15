@@ -15,7 +15,6 @@ import io.netty.handler.codec.http.*
 import io.netty.handler.codec.http2.*
 import kotlinx.coroutines.*
 import java.io.*
-import java.nio.*
 import java.util.*
 import kotlin.coroutines.*
 
@@ -25,9 +24,9 @@ private const val UNFLUSHED_LIMIT = 65536
 internal class NettyResponsePipeline constructor(
     private val context: ChannelHandlerContext,
     initialEncapsulation: WriterEncapsulation,
-    override val coroutineContext: CoroutineContext
+    override val coroutineContext: CoroutineContext,
+    private val responseQueue: Queue<NettyApplicationCall>
 ) : CoroutineScope {
-    private var responseQueue: Queue<NettyApplicationCall> = ArrayDeque()
 
     private var needsFlush: Boolean = false
 
@@ -63,6 +62,7 @@ internal class NettyResponsePipeline constructor(
     private fun startResponseProcessing() {
         // can we add to the queue while iterating?
         while (true) {
+            context.read()
             val call = responseQueue.poll() ?: break
             processElement(call)
         }
@@ -243,6 +243,7 @@ internal class NettyResponsePipeline constructor(
                 val message = encapsulation.transform(buf, false)
 
                 if (unflushedBytes >= UNFLUSHED_LIMIT) {
+                    context.read()
                     val future = context.writeAndFlush(message)
                     lastFuture = future
                     future.suspendAwait()
@@ -288,6 +289,7 @@ internal class NettyResponsePipeline constructor(
                 val message = encapsulation.transform(buf, false)
 
                 if (unflushedBytes >= UNFLUSHED_LIMIT || channel.availableForRead == 0) {
+                    context.read()
                     val future = context.writeAndFlush(message)
                     lastFuture = future
                     future.suspendAwait()

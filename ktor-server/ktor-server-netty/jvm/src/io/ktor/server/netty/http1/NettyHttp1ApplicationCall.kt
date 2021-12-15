@@ -16,7 +16,7 @@ internal class NettyHttp1ApplicationCall(
     application: Application,
     context: ChannelHandlerContext,
     httpRequest: HttpRequest,
-    requestBodyChannel: ByteChannel?,
+    requestBodyChannel: ByteReadChannel?,
     engineContext: CoroutineContext,
     userContext: CoroutineContext
 ) : NettyApplicationCall(application, context, httpRequest) {

@@ -78,7 +78,9 @@ internal class NettyHttp1ApplicationResponse constructor(
         val nettyChannel = nettyContext.channel()
         val userAppContext = userContext + NettyDispatcher.CurrentContext(nettyContext)
 
-        val upgradedReadChannel = ByteChannel()
+        val bodyHandler = nettyContext.pipeline().get(RequestBodyHandler::class.java)
+        val upgradedReadChannel = bodyHandler.upgrade()
+
         val upgradedWriteChannel = ByteChannel()
 
         sendResponse(chunked = false, content = upgradedWriteChannel)
