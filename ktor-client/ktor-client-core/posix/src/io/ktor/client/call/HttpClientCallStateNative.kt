@@ -10,6 +10,6 @@ import io.ktor.client.statement.*
 import io.ktor.utils.io.concurrent.*
 
 internal actual class HttpClientCallState {
-    actual var request: HttpRequest? by shared(null)
-    actual var response: HttpResponse? by shared(null)
+    actual var request: HttpRequest? = null
+    actual var response: HttpResponse? = null
 }

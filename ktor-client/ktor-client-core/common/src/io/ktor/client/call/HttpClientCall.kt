@@ -37,12 +37,10 @@ internal fun HttpClientCall(
  * @property client: client that executed the call.
  */
 public open class HttpClientCall internal constructor(
-    client: HttpClient
+    public val client: HttpClient
 ) : CoroutineScope {
     private val state = HttpClientCallState()
     private val received: AtomicBoolean = atomic(false)
-
-    public val client: HttpClient? by threadLocal(client)
 
     override val coroutineContext: CoroutineContext get() = response.coroutineContext
 
@@ -93,9 +91,8 @@ public open class HttpClientCall internal constructor(
             val responseData = attributes.getOrNull(CustomResponse) ?: getResponseContent()
 
             val subject = HttpResponseContainer(info, responseData)
-            val currentClient = client ?: error("Failed to receive call($this) in different native thread.")
+            val result = client.responsePipeline.execute(this, subject).response
 
-            val result = currentClient.responsePipeline.execute(this, subject).response
             if (!result.instanceOf(info.type)) {
                 val from = result::class
                 val to = info.type

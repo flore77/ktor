@@ -273,17 +273,13 @@ public fun HttpRequestBuilder.retry(block: HttpRequestRetry.Configuration.() -> 
     attributes.put(MaxRetriesPerRequestAttributeKey, configuration.maxRetries)
 }
 
-@SharedImmutable
 private val MaxRetriesPerRequestAttributeKey =
     AttributeKey<Int>("MaxRetriesPerRequestAttributeKey")
 
-@SharedImmutable
 private val ShouldRetryPerRequestAttributeKey =
     AttributeKey<(HttpRequest, HttpResponse) -> Boolean>("ShouldRetryPerRequestAttributeKey")
 
-@SharedImmutable
 private val ShouldRetryOnExceptionPerRequestAttributeKey =
     AttributeKey<(HttpRequestBuilder, Throwable) -> Boolean>("ShouldRetryOnExceptionPerRequestAttributeKey")
 
-@SharedImmutable
 private val RetryDelayPerRequestAttributeKey = AttributeKey<(Int) -> Long>("RetryDelayPerRequestAttributeKey")

@@ -63,11 +63,7 @@ internal class ByteChannelNative(
     autoFlush: Boolean,
     pool: ObjectPool<ChunkBuffer> = ChunkBuffer.Pool
 ) : ByteChannelSequentialBase(initial, autoFlush, pool) {
-    private var attachedJob: Job? by shared(null)
-
-    init {
-        makeShared()
-    }
+    private var attachedJob: Job? = null
 
     @OptIn(InternalCoroutinesApi::class)
     override fun attachJob(job: Job) {

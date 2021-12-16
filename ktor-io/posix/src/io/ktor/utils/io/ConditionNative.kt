@@ -6,7 +6,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
 internal actual class Condition actual constructor(val predicate: () -> Boolean) {
-    private var continuation: Continuation<Unit>? by shared(null)
+    private var continuation: Continuation<Unit>? = null
 
     actual fun check(): Boolean {
         return predicate()

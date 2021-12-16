@@ -46,10 +46,6 @@ public class HttpSend private constructor(
     @OptIn(InternalAPI::class)
     private val interceptors: MutableList<HttpSendInterceptor> = sharedList()
 
-    init {
-        makeShared()
-    }
-
     /**
      * Install send pipeline starter interceptor
      */

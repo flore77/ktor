@@ -198,7 +198,7 @@ public open class StringValuesBuilderImpl(
 ) : StringValuesBuilder {
 
     protected val values: MutableMap<String, MutableList<String>> =
-        if (caseInsensitiveName) caseInsensitiveMap() else sharedMap(size)
+        if (caseInsensitiveName) caseInsensitiveMap() else LinkedHashMap(size)
 
     override fun getAll(name: String): List<String>? = values[name]
 

@@ -47,7 +47,7 @@ public open class Route(
     @OptIn(InternalAPI::class)
     private val childList: MutableList<Route> = sharedList()
 
-    private var cachedPipeline: ApplicationCallPipeline? by shared(null)
+    private var cachedPipeline: ApplicationCallPipeline? = null
 
     @OptIn(InternalAPI::class)
     internal val handlers = sharedList<PipelineInterceptor<Unit, ApplicationCall>>()

@@ -34,7 +34,7 @@ public open class Pipeline<TSubject : Any, TContext : Any>(
 
     private val phasesRaw: MutableList<Any> = sharedListOf(*phases)
 
-    private var interceptorsQuantity by shared(0)
+    private var interceptorsQuantity = 0
 
     /**
      * Phases of this pipeline
@@ -59,15 +59,9 @@ public open class Pipeline<TSubject : Any, TContext : Any>(
             _interceptors.value = value
         }
 
-    /**
-     * share between pipelines/contexts
-     */
-    private var interceptorsListShared: Boolean by shared(false)
+    private var interceptorsListShared: Boolean = false
 
-    /**
-     * interceptors list is shared with pipeline phase content
-     */
-    private var interceptorsListSharedPhase: PipelinePhase? by shared(null)
+    private var interceptorsListSharedPhase: PipelinePhase? = null
 
     public constructor(
         phase: PipelinePhase,

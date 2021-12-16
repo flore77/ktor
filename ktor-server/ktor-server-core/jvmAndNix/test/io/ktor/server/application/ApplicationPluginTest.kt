@@ -164,7 +164,7 @@ class ApplicationPluginTest {
     }
 
     class ConfigWithData {
-        var data by shared("")
+        var data = ""
     }
 
     @Test
@@ -202,7 +202,7 @@ class ApplicationPluginTest {
         assertWithPlugin(expectedResponse = "oldValue:newValue")
     }
 
-    var onCallProcessedTimes by shared(0)
+    var onCallProcessedTimes = 0
 
     @Test
     fun `test same phase defined twice`() {
@@ -450,7 +450,7 @@ class ApplicationPluginTest {
         assertWithPlugin(expectedResponse = "custom data", data = "custom data")
     }
 
-    var globalSideEffect by shared("")
+    var globalSideEffect = ""
 
     @Test
     fun `test side effect of install called on every installation`() {

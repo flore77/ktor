@@ -296,11 +296,6 @@ public abstract interface class io/ktor/utils/io/LookAheadSuspendSession : io/kt
 	public abstract fun awaitAtLeast (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class io/ktor/utils/io/NativeUtilsJvmKt {
-	public static final fun makeShared (Ljava/lang/Object;)V
-	public static final fun preventFreeze (Ljava/lang/Object;)V
-}
-
 public abstract interface class io/ktor/utils/io/ReadSession {
 	public abstract fun discard (I)I
 	public abstract fun getAvailableForRead ()I
@@ -641,7 +636,9 @@ public final class io/ktor/utils/io/concurrent/SharedJvmKt {
 }
 
 public final class io/ktor/utils/io/concurrent/SharedKt {
+	public static final fun shared (Ljava/lang/Object;)Lkotlin/properties/ReadWriteProperty;
 	public static final fun sharedLazy (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
+	public static final fun threadLocal (Ljava/lang/Object;)Lkotlin/properties/ReadOnlyProperty;
 }
 
 public class io/ktor/utils/io/core/Buffer {

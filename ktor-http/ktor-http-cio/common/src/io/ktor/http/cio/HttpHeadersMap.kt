@@ -23,13 +23,8 @@ private const val EXPECTED_HEADERS_QTY = 64
  * [6] next entry index (multiplied) with the same name hash
  * [7] reserved
  */
-@SharedImmutable
 private const val HEADER_SIZE = 8
-
-@SharedImmutable
 private const val HEADER_ARRAY_POOL_SIZE = 1000
-
-@ThreadLocal
 private val EMPTY_INT_LIST = mutableListOf<Int>()
 
 /**
@@ -37,10 +32,10 @@ private val EMPTY_INT_LIST = mutableListOf<Int>()
  */
 @Suppress("KDocMissingDocumentation")
 public class HttpHeadersMap internal constructor(private val builder: CharArrayBuilder) {
-    public var size: Int by shared(0)
+    public var size: Int = 0
         private set
 
-    private var indexes: MutableList<Int> by shared(IntListPool.borrow())
+    private var indexes: MutableList<Int> = IntListPool.borrow()
 
     public fun put(
         nameHash: Int,
@@ -151,11 +146,9 @@ internal fun HttpHeadersMap.dumpTo(indent: String, out: Appendable) {
     }
 }
 
-@ThreadLocal
-@Suppress("DEPRECATION")
 private val IntListPool: DefaultPool<MutableList<Int>> =
     object : DefaultPool<MutableList<Int>>(HEADER_ARRAY_POOL_SIZE) {
-        override fun produceInstance(): MutableList<Int> = sharedList<Int>().apply {
+        override fun produceInstance(): MutableList<Int> = mutableListOf<Int>().apply {
             repeat(EXPECTED_HEADERS_QTY * HEADER_SIZE) { add(0) }
         }
     }

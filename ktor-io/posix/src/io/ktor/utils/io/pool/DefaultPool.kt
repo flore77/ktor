@@ -10,7 +10,7 @@ public actual abstract class DefaultPool<T : Any> actual constructor(
     protected val lock: SynchronizedObject = SynchronizedObject()
 
     private val instances = atomicArrayOfNulls<Any?>(capacity)
-    private var size by shared(0)
+    private var size = 0
 
     protected actual abstract fun produceInstance(): T
     protected actual open fun disposeInstance(instance: T) {}

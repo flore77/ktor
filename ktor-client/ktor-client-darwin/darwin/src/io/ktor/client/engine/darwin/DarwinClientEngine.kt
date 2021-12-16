@@ -51,8 +51,6 @@ internal class DarwinClientEngine(override val config: DarwinClientEngineConfig)
             config.requestConfig(this)
         }
 
-        responseReader.makeShared()
-
         val session = NSURLSession.sessionWithConfiguration(
             configuration,
             responseReader,

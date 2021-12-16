@@ -20,6 +20,7 @@ import org.slf4j.event.*
 import java.util.concurrent.*
 import kotlin.test.*
 
+@Suppress("SameParameterValue")
 class CallLoggingTest {
 
     private lateinit var messages: MutableList<String>
@@ -194,6 +195,7 @@ class CallLoggingTest {
 
     @Test
     fun `can fill MDC before routing`() = testApplication {
+        @Suppress("LocalVariableName")
         val TestPlugin = createApplicationPlugin("TestPlugin") {
             onCall { it.response.headers.append("test-header", "test-value") }
         }
@@ -257,11 +259,11 @@ class CallLoggingTest {
         dispatcher.close()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun `can fill MDC and survive context switch in IOCoroutineDispatcher`() = testApplication {
         var counter = 0
 
-        @OptIn(ObsoleteCoroutinesApi::class)
         val dispatcher = newFixedThreadPoolContext(1, "test-dispatcher")
         environment {
             module {

@@ -33,7 +33,7 @@ public class MockEngine(override val config: MockEngineConfig) : HttpClientEngin
     private val _requestsHistory: MutableList<HttpRequestData> = sharedList()
     private val _responseHistory: MutableList<HttpResponseData> = sharedList()
 
-    private var invocationCount: Int by shared(0)
+    private var invocationCount: Int = 0
 
     init {
         check(config.requestHandlers.size > 0) {

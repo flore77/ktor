@@ -34,7 +34,7 @@ public class CIOApplicationEngine(
         public var connectionIdleTimeoutSeconds: Int = 45
     }
 
-    private val configuration: Configuration by shared(Configuration().apply(configure))
+    private var configuration: Configuration = Configuration().apply(configure)
 
     @OptIn(InternalCoroutinesApi::class)
     private val engineDispatcher = Dispatchers.IOBridge
@@ -45,7 +45,7 @@ public class CIOApplicationEngine(
     private val startupJob: CompletableDeferred<Unit> = CompletableDeferred()
     private val stopRequest: CompletableJob = Job()
 
-    private var serverJob: Job by shared(Job())
+    private var serverJob: Job = Job()
 
     init {
         serverJob = initServerJob()
